@@ -128,11 +128,11 @@ remotePort = 6000
 
 ## 安装示例
 
-安装过程中的输出示例：
+如下为一个通过远程配置文件安装的示例：
 
 ```plain
--> # curl -sSL https://raw.githubusercontent.com/funnyzak/frpc/refs/heads/main/frpc.sh | bash -s install --token your_token
-[INFO] Configuration method: Default template
+> # curl -sSL https://gitee.com/funnyzak/frpc/raw/main/frpc.sh | bash -s install --token myfrpstoken --config-url https://myfrpcstore.yycc.dev/示例配置.toml
+[INFO] Configuration method: URL (https://myfrpcstore.yycc.dev/示例配置.toml)
 
 ===== Installing FRPC =====
 
@@ -140,10 +140,14 @@ remotePort = 6000
 [INFO] Checking required dependencies...
 [SUCCESS] All dependencies are installed.
 [SUCCESS] systemd is available.
-[INFO] Created temporary directory: /tmp/frpc_install_1744074750
-[SUCCESS] Default configuration created.
+[INFO] Created temporary directory: /tmp/frpc_install_1744079006
+[INFO] Downloading FRPC configuration to /tmp/frpc_install_1744079006/frpc_conf_1744079006.toml
+[INFO] Source: https://myfrpcstore.yycc.dev/示例配置.toml
+######################################################################## 100.0%
+[SUCCESS] FRPC configuration downloaded successfully.
+[SUCCESS] Configuration successfully downloaded from URL.
 [SUCCESS] FRPC configuration applied successfully to /etc/frp/frpc.toml
-[INFO] Downloading FRPC package to /tmp/frpc_install_1744074750/frp.tar.gz
+[INFO] Downloading FRPC package to /tmp/frpc_install_1744079006/frp.tar.gz
 [INFO] Source: https://ghfast.top/https://github.com/fatedier/frp/releases/download/v0.61.2/frp_0.61.2_linux_amd64.tar.gz
 ######################################################################## 100.0%
 [SUCCESS] FRPC package downloaded successfully.
@@ -154,11 +158,23 @@ Created symlink /etc/systemd/system/multi-user.target.wants/frpc.service → /et
 [INFO] Checking FRPC service status...
 ● frpc.service - FRP Client Service
      Loaded: loaded (/etc/systemd/system/frpc.service; enabled; vendor preset: enabled)
-     Active: active (running) since Mon 2025-04-07 20:47:55 CST; 12h ago
-    Process: 16991 ExecStart=/opt/frpc/frpc -c /etc/frp/frpc.toml
-   Main PID: 16991
-        CPU: 9ms
-[INFO] Cleaned up temporary files.
+     Active: active (running) since Tue 2025-04-08 10:23:35 CST; 2s ago
+   Main PID: 23709 (frpc)
+      Tasks: 6 (limit: 48097)
+     Memory: 4.9M
+        CPU: 11ms
+     CGroup: /system.slice/frpc.service
+             └─23709 /opt/frpc/frpc -c /etc/frp/frpc.toml
+
+4月 08 10:23:35 PVE systemd[1]: Started FRP Client Service.
+4月 08 10:23:35 PVE frpc[23709]: 2025-04-08 10:23:35.561 [I] [sub/root.go:142] start frpc service for config file [/etc/frp/frpc.toml]
+4月 08 10:23:35 PVE frpc[23709]: 2025-04-08 10:23:35.562 [I] [client/service.go:295] try to connect to server...
+4月 08 10:23:35 PVE frpc[23709]: 2025-04-08 10:23:35.603 [I] [client/service.go:287] [b150d9480cc74323] login to server success, get run id [b150d9480cc74323]
+4月 08 10:23:35 PVE frpc[23709]: 2025-04-08 10:23:35.603 [I] [proxy/proxy_manager.go:173] [b150d9480cc74323] proxy added: [示例配置.RPC 示例配置.HTTP]
+4月 08 10:23:35 PVE frpc[23709]: 2025-04-08 10:23:35.615 [I] [client/control.go:168] [b150d9480cc74323] [示例配置.RPC] start proxy success
+4月 08 10:23:35 PVE frpc[23709]: 2025-04-08 10:23:35.615 [I] [client/control.go:168] [b150d9480cc74323] [示例配置.HTTP] start proxy success
+Hint: Some lines were ellipsized, use -l to show in full.
+[SUCCESS] FRPC service is running.
 ```
 
 ## 故障排除
