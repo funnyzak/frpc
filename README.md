@@ -2,7 +2,7 @@
 
 `frpc.sh` 是一个全面的 FRP 客户端 (frpc) 安装和管理脚本，用于帮助在 NAT 或防火墙后建立本地与远程网络之间的安全连接。
 
-## 功能特点
+## 特点
 
 - **一键安装**：自动化安装和配置 frpc
 - **多种配置方式**：支持基于 URL、本地文件或交互式配置
@@ -16,13 +16,37 @@
 - root 或 sudo 权限
 - curl 或 wget 用于下载软件包
 
-## 使用方法
+## 如何使用
 
-### 远程安装
+### 远程使用
 
 ```bash
-# 远程安装示例
+# 基本远程安装示例（使用令牌）
+curl -sSL https://gitee.com/funnyzak/frpc/raw/main/frpc.sh | bash -s install --token your_token
+
+# 使用远程配置文件URL安装
 curl -sSL https://gitee.com/funnyzak/frpc/raw/main/frpc.sh | bash -s install --token your_token --config-url http://example.com/frpc.toml
+
+# 远程安装特定版本
+curl -sSL https://gitee.com/funnyzak/frpc/raw/main/frpc.sh | bash -s install --token your_token --version 0.60.0
+
+# 远程交互式安装
+curl -sSL https://gitee.com/funnyzak/frpc/raw/main/frpc.sh | bash -s install --token your_token --interactive
+
+# 远程安装到自定义路径
+curl -sSL https://gitee.com/funnyzak/frpc/raw/main/frpc.sh | bash -s install --token your_token --install-path /usr/local/frpc --config-path /etc/frpc/frpc.toml
+
+# 自定义安装包下载地址
+curl -sSL https://gitee.com/funnyzak/frpc/raw/main/frpc.sh | bash -s install --token your_token --frp-download-url http://example.com/frp.tar.gz
+
+# 远程查看当前配置
+curl -sSL https://gitee.com/funnyzak/frpc/raw/main/frpc.sh | bash -s config
+
+# 远程查看使用提示
+curl -sSL https://gitee.com/funnyzak/frpc/raw/main/frpc.sh | bash -s tips
+
+# 远程卸载
+curl -sSL https://gitee.com/funnyzak/frpc/raw/main/frpc.sh | bash -s uninstall
 ```
 
 ### 基本安装
@@ -105,5 +129,4 @@ remotePort = 6000
 
 - 为安全起见，脚本会验证所有输入和配置
 - 脚本会创建 systemd 服务，用于自动启动和管理
-- 配置文件在更改前会被备份
 - 日志可在系统日志中查看（`journalctl -u frpc`）
