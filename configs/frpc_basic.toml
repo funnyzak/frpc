@@ -1,0 +1,26 @@
+# FRP 客户端基础配置示例
+# 此配置提供了最基本的服务器连接设置
+
+# FRP 服务器连接配置
+serverAddr = "frps.example.com"  # FRP 服务器地址
+serverPort = 7000                # FRP 服务器端口
+auth.token = "your_token_here"   # 认证令牌
+
+# 日志配置
+log.level = "info"               # 日志级别: trace, debug, info, warn, error
+log.maxDays = 3                  # 日志最大保留天数
+log.disablePrintColor = false    # 是否禁用彩色日志输出
+
+# 管理配置（可选）
+# adminAddr = "127.0.0.1"        # 管理界面监听地址
+# adminPort = 7400               # 管理界面端口
+# adminUser = "admin"            # 管理界面用户名
+# adminPwd = "admin"             # 管理界面密码
+
+# 基本 TCP 服务示例
+[[proxies]]
+name = "simple-tcp"              # 服务名称，必须唯一
+type = "tcp"                     # 服务类型
+localIP = "127.0.0.1"            # 本地服务 IP
+localPort = 22                   # 本地服务端口
+remotePort = 6000                # 远程服务端口

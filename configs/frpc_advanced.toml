@@ -1,0 +1,82 @@
+# FRP 客户端高级配置示例
+# 此配置展示了多种服务类型和高级功能的组合使用
+
+# FRP 服务器连接配置
+serverAddr = "frps.example.com"  # FRP 服务器地址
+serverPort = 7000                # FRP 服务器端口
+auth.token = "your_token_here"   # 认证令牌
+
+# 全局设置
+user = "advanced_user"           # 用户名标识
+loginFailExit = true             # 登录失败是否退出
+transport.heartbeatInterval = 30 # 心跳间隔（秒）
+transport.heartbeatTimeout = 90  # 心跳超时（秒）
+transport.maxPoolCount = 5       # 最大连接池数量
+
+# 日志配置
+log.level = "info"               # 日志级别
+log.maxDays = 7                  # 日志最大保留天数
+log.file = "/var/log/frpc.log"   # 日志文件路径
+
+# 管理界面配置
+adminAddr = "127.0.0.1"          # 管理界面监听地址
+adminPort = 7400                 # 管理界面端口
+adminUser = "admin"              # 管理界面用户名
+adminPwd = "strongpassword"      # 管理界面密码
+
+# ===== 多种服务配置示例 =====
+
+# SSH 服务
+[[proxies]]
+name = "ssh"                     # 服务名称
+type = "tcp"                     # 服务类型
+localIP = "127.0.0.1"            # 本地服务 IP
+localPort = 22                   # 本地服务端口
+remotePort = 6000                # 远程服务端口
+transport.useEncryption = true   # 使用加密
+transport.useCompression = true  # 使用压缩
+
+# Web 服务 (HTTP)
+[[proxies]]
+name = "web"                     # 服务名称
+type = "http"                    # 服务类型
+localIP = "127.0.0.1"            # 本地服务 IP
+localPort = 80                   # 本地服务端口
+customDomains = ["www.example.com"] # 自定义域名
+locations = ["/", "/api"]        # 路由规则
+httpUser = "webuser"             # HTTP 认证用户名
+httpPwd = "webpass"              # HTTP 认证密码
+
+# Web 服务 (HTTPS)
+[[proxies]]
+name = "web-https"               # 服务名称
+type = "https"                   # 服务类型
+localIP = "127.0.0.1"            # 本地服务 IP
+localPort = 443                  # 本地服务端口
+customDomains = ["secure.example.com"] # 自定义域名
+
+# 远程桌面服务
+[[proxies]]
+name = "rdp"                     # 服务名称
+type = "tcp"                     # 服务类型
+localIP = "127.0.0.1"            # 本地服务 IP
+localPort = 3389                 # 本地 RDP 服务端口
+remotePort = 7000                # 远程服务端口
+
+# UDP 服务示例 (DNS)
+[[proxies]]
+name = "dns"                     # 服务名称
+type = "udp"                     # 服务类型
+localIP = "8.8.8.8"              # 目标 DNS 服务器
+localPort = 53                   # DNS 服务端口
+remotePort = 6053                # 远程服务端口
+
+# STCP (Secret TCP) 示例 - 访问者配置
+# 需要配对的服务端和访问端配置
+[[proxies]]
+name = "secret_tcp_server"       # 服务名称
+type = "stcp"                    # 服务类型 - secret tcp
+# role = "server"                # 角色设置为服务端
+secretKey = "abcdefg"            # 密钥，访问端需要相同密钥
+localIP = "127.0.0.1"            # 本地服务 IP
+localPort = 22                   # 本地服务端口
