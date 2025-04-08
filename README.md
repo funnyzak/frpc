@@ -18,6 +18,13 @@
 
 ## 使用方法
 
+### 远程安装
+
+```bash
+# 远程安装示例
+curl -sSL https://gitee.com/funnyzak/frpc/raw/main/frpc.sh | bash -s install --token your_token --config-url http://example.com/frpc.toml
+```
+
 ### 基本安装
 
 ```bash
@@ -50,23 +57,16 @@
 ./frpc.sh uninstall
 ```
 
-### 远程执行安装
-
-```bash
-# 远程安装示例
-curl -sSL https://gitee.com/funnyzak/frpc/raw/main/frpc.sh | bash -s install --token your_token --config-url http://example.com/frpc.toml
-```
-
 ## 安装命令选项
 
 - `--token <value>`：设置 FRP 服务器令牌（必需）
-- `--config-url <url>`：从 URL 下载配置
+- `--config-url <url>`：从 URL 下载客户端配置文件
 - `--config-file <path>`：使用本地配置文件
 - `--interactive`：进入交互式配置模式
-- `--frp-download-url <url>`：自定义 frpc 包的下载 URL
-- `--install-path <path>`：自定义安装路径
-- `--config-path <path>`：自定义配置文件路径
-- `--version <version>`：指定要安装的版本
+- `--frp-download-url <url>`：自定义 frpc 包的下载 URL，如果不指定，则使用默认的 GitHub URL 和 最新版本
+- `--install-path <path>`：自定义安装路径，不需要指定，默认安装在 `/opt/frpc`
+- `--config-path <path>`：自定义配置文件路径，不需要指定，默认安装在 `/etc/frp/frpc.toml`
+- `--version <version>`：指定要安装的版本，如果不指定，则使用最新版本
 
 ## 环境变量
 
