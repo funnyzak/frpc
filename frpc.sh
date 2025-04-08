@@ -27,6 +27,9 @@
 #   --config-path <path>            Custom config file path
 #   --version <version>             Specific version to install
 #
+# Options for uninstall command:
+#   --force                         Force uninstallation without confirmation
+#
 # Environment variables (alternatives to command options):
 #   FRPC_INSTALL_PATH               Custom installation path (default: /opt/frpc)
 #   FRPC_CONFIG_PATH                Custom config path (default: /etc/frp/frpc.toml)
@@ -232,6 +235,7 @@ parse_arguments() {
     CONFIG_URL=""
     CONFIG_FILE=""
     INTERACTIVE_MODE=false
+    FORCE_MODE=false
 
     # First argument should be a command
     COMMAND="$1"
@@ -351,7 +355,23 @@ parse_arguments() {
                 exit 1
             fi
             ;;
-        config|uninstall|help|tips)
+        uninstall)
+            # Parse uninstall command options
+            while [[ $# -gt 0 ]]; do
+                case "$1" in
+                    --force)
+                        FORCE_MODE=true
+                        shift
+                        ;;
+                    *)
+                        log_message "error" "Unknown option: $1"
+                        show_help
+                        exit 1
+                        ;;
+                esac
+            done
+            ;;
+        config|help|tips)
             # No additional arguments needed for these commands
             ;;
         *)
@@ -941,13 +961,17 @@ uninstall_frpc() {
         exit 0
     fi
 
-    # Confirm uninstallation
-    log_message "warning" "This will remove FRPC and all its configurations."
-    log_message "warning" "All intranet penetration services will be stopped."
+    # Confirm uninstallation unless force mode is enabled
+    if [[ "$FORCE_MODE" != true ]]; then
+        log_message "warning" "This will remove FRPC and all its configurations."
+        log_message "warning" "All intranet penetration services will be stopped."
 
-    if ! confirm_action "Are you sure you want to uninstall FRPC?"; then
-        log_message "info" "Uninstallation canceled by user."
-        exit 0
+        if ! confirm_action "Are you sure you want to uninstall FRPC?"; then
+            log_message "info" "Uninstallation canceled by user."
+            exit 0
+        fi
+    else
+        log_message "info" "Force mode enabled, skipping confirmation..."
     fi
 
     # Stop and disable service
@@ -1069,7 +1093,7 @@ $(echo -e "${YELLOW}")Usage:$(echo -e "${PLAIN}")
 $(echo -e "${YELLOW}")Commands:$(echo -e "${PLAIN}")
   install [options]               Install and configure frpc
   config                          Show current frpc configuration
-  uninstall                       Remove frpc installation
+  uninstall [options]             Remove frpc installation
   tips                            Show helpful tips and commands
   help                            Display this help information
 
@@ -1082,6 +1106,9 @@ $(echo -e "${YELLOW}")Options for install command:$(echo -e "${PLAIN}")
   --install-path <path>           Custom installation path
   --config-path <path>            Custom config file path
   --version <version>             Specific version to install
+
+$(echo -e "${YELLOW}")Options for uninstall command:$(echo -e "${PLAIN}")
+  --force                         Force uninstallation without confirmation
 
 $(echo -e "${YELLOW}")Environment variables (alternatives to command options):$(echo -e "${PLAIN}")
   FRPC_INSTALL_PATH               Custom installation path (default: /opt/frpc)
@@ -1111,14 +1138,11 @@ $(echo -e "${YELLOW}")Examples:$(echo -e "${PLAIN}")
   # Show current configuration:
   $0 config
 
-  # Show helpful tips:
-  $0 tips
-
-  # Show help information:
-  $0 help
-
-  # Uninstall frpc:
+  # Uninstall frpc with confirmation:
   $0 uninstall
+
+  # Force uninstall without confirmation:
+  $0 uninstall --force
 EOF
 }
 

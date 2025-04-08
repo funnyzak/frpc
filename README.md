@@ -30,7 +30,7 @@ curl -sSL https://raw.githubusercontent.com/funnyzak/frpc/refs/heads/main/frpc.s
 curl -sSL https://raw.githubusercontent.com/funnyzak/frpc/refs/heads/main/frpc.sh | bash -s install --token your_token --version 0.60.0
 
 # 远程交互式安装
-curl -sSL https://raw.githubusercontent.com/funnyzak/frpc/refs/heads/main/frpc.sh | bash -s install --token your_token --interactive
+curl -sSL https://raw.githubusercontent.com/funnyzak/frpc/refs/heads/main/frpc.sh -o frpc.sh && chmod +x frpc.sh && ./frpc.sh install --token your_token --interactive
 
 # 远程安装到自定义路径
 curl -sSL https://raw.githubusercontent.com/funnyzak/frpc/refs/heads/main/frpc.sh | bash -s install --token your_token --install-path /usr/local/frpc --config-path /etc/frpc/frpc.toml
@@ -44,8 +44,11 @@ curl -sSL https://raw.githubusercontent.com/funnyzak/frpc/refs/heads/main/frpc.s
 # 远程查看使用提示
 curl -sSL https://raw.githubusercontent.com/funnyzak/frpc/refs/heads/main/frpc.sh | bash -s tips
 
-# 远程卸载
-curl -sSL https://raw.githubusercontent.com/funnyzak/frpc/refs/heads/main/frpc.sh | bash -s uninstall
+# 远程卸载(需确认)
+curl -sSL https://raw.githubusercontent.com/funnyzak/frpc/refs/heads/main/frpc.sh -o frpc.sh && chmod +x frpc.sh && ./frpc.sh uninstall
+
+# 远程卸载(不需确认)
+curl -sSL https://raw.githubusercontent.com/funnyzak/frpc/refs/heads/main/frpc.sh | bash -s uninstall --force
 ```
 > 如果你在中国大陆地区，无法访问 Github, 请使用 `Gitee` 镜像地址：
 > `https://gitee.com/funnyzak/frpc/raw/main/frpc.sh`，或者使用 `ghfast` 代理地址：`https://ghfast.top/https://raw.githubusercontent.com/funnyzak/frpc/refs/heads/main/frpc.sh`。
@@ -81,6 +84,9 @@ curl -sSL https://raw.githubusercontent.com/funnyzak/frpc/refs/heads/main/frpc.s
 ./frpc.sh tips
 
 # 卸载 frpc
+./frpc.sh uninstall --force
+
+# 卸载 frpc（需要确认）
 ./frpc.sh uninstall
 ```
 
