@@ -1,0 +1,33 @@
+# FRP 客户端 SSH 穿透配置示例
+# 此配置专注于 SSH 服务穿透，适用于远程管理服务器
+
+# FRP 服务器连接配置
+serverAddr = "frps.example.com"  # FRP 服务器地址
+serverPort = 7000                # FRP 服务器端口
+auth.token = "your_token_here"   # 认证令牌
+
+# 日志配置
+log.level = "info"               # 日志级别
+log.maxDays = 3                  # 日志最大保留天数
+
+# SSH 服务穿透配置
+[[proxies]]
+name = "ssh"                     # 服务名称
+type = "tcp"                     # 服务类型
+localIP = "127.0.0.1"            # 本地 SSH 服务 IP
+localPort = 22                   # 本地 SSH 服务端口
+remotePort = 6000                # 远程服务端口
+
+# 加密和压缩设置（可选，提升安全性和性能）
+transport.useEncryption = true   # 使用加密
+transport.useCompression = true  # 使用压缩
+
+# 健康检查配置
+# health_check_type = "tcp"      # 健康检查类型
+# health_check_timeout_s = 3     # 健康检查超时时间（秒）
+# health_check_max_failed = 3    # 最大失败次数
+# health_check_interval_s = 10   # 健康检查间隔（秒）
+
+# 负载均衡组配置（可选，适用于多实例）
+# group = "ssh_group"            # 分组名称
+# group_key = "123456"           # 分组密钥

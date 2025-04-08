@@ -1,76 +1,109 @@
-# frpc (Fast Reverse Proxy)
+# frpc (Fast Reverse Proxy Client)
 
-`frpc.sh` is a comprehensive installation and management script for FRP Client (frpc), which helps establish secure connections between local and remote networks through NAT or firewalls.
+`frpc.sh` 是一个全面的 FRP 客户端 (frpc) 安装和管理脚本，用于帮助在 NAT 或防火墙后建立本地与远程网络之间的安全连接。
 
-## Features
-- **Complete Installation**: Automated installation and configuration of frpc.
-- **Multiple Configuration Methods**: Support for URL-based, local file, or interactive configuration.
-- **Customizable Paths**: Flexible installation and configuration paths.
-- **Service Management**: Automatic systemd service setup and management.
-- **Uninstallation Support**: Clean removal of frpc installation when needed.
+## 功能特点
 
-## Requirements
-- Linux-based operating system with systemd
-- Root or sudo privileges
-- curl or wget for downloading packages
+- **一键安装**：自动化安装和配置 frpc
+- **多种配置方式**：支持基于 URL、本地文件或交互式配置
+- **路径自定义**：灵活的安装路径和配置路径
+- **服务管理**：自动设置和管理 systemd 服务
+- **完整卸载**：需要时可以彻底删除 frpc 安装
 
-## Usage
+## 系统要求
 
-### Installation
+- 基于 Linux 的操作系统，且支持 systemd
+- root 或 sudo 权限
+- curl 或 wget 用于下载软件包
+
+## 使用方法
+
+### 基本安装
+
 ```bash
-# Basic installation with token
-./install_frpc.sh install --token my-token-value
+# 基本安装（使用 token）
+./frpc.sh install --token my-token-value
 
-# Installation with URL configuration
-./install_frpc.sh install --token my-token-value --config-url http://example.com/frpc.toml
+# 使用 URL 配置安装
+./frpc.sh install --token my-token-value --config-url http://example.com/frpc.toml
 
-# Installation with local configuration file
-./install_frpc.sh install --token my-token-value --config-file ./my-frpc.toml
+# 使用本地配置文件安装
+./frpc.sh install --token my-token-value --config-file ./configs/frpc_basic.toml
 
-# Interactive configuration
-./install_frpc.sh install --token my-token-value --interactive
+# 交互式配置安装
+./frpc.sh install --token my-token-value --interactive
 
-# Installation with custom paths
-./install_frpc.sh install --token my-token-value --install-path /usr/local/frpc --config-path /etc/frpc.toml
+# 自定义路径安装
+./frpc.sh install --token my-token-value --install-path /usr/local/frpc --config-path /etc/frpc/frpc.toml
 ```
 
-### Management
+### 管理命令
+
 ```bash
-# Show current configuration
-./install_frpc.sh config
+# 查看当前配置
+./frpc.sh config
 
-# Show usage tips
-./install_frpc.sh tips
+# 查看使用提示
+./frpc.sh tips
 
-# Uninstall frpc
-./install_frpc.sh uninstall
+# 卸载 frpc
+./frpc.sh uninstall
 ```
 
-### Remote Execution
+### 远程执行安装
+
 ```bash
-# Remote installation example
-curl -sSL https://gitee.com/funnyzak/frpc/raw/main/utilities/shell/frp/install_frpc.sh | bash -s install --token your_token --config-url http://example.com/frpc.toml
+# 远程安装示例
+curl -sSL https://gitee.com/funnyzak/frpc/raw/main/frpc.sh | bash -s install --token your_token --config-url http://example.com/frpc.toml
 ```
 
-## Options for Install Command
-- `--token <value>`: Set the FRP server token (required)
-- `--config-url <url>`: Download configuration from URL
-- `--config-file <path>`: Use local configuration file
-- `--interactive`: Enter interactive configuration mode
-- `--frp-download-url <url>`: Custom download URL for frpc package
-- `--install-path <path>`: Custom installation path
-- `--config-path <path>`: Custom config file path
-- `--version <version>`: Specific version to install
+## 安装命令选项
 
-## Environment Variables
-- `FRPC_INSTALL_PATH`: Custom installation path (default: /opt/frpc)
-- `FRPC_CONFIG_PATH`: Custom config path (default: /etc/frp/frpc.toml)
-- `FRPC_DOWNLOAD_URL`: Custom download URL for frpc package
-- `FRPC_VERSION`: Specific version to install (default: 0.61.2)
-- `FRPC_TOKEN`: FRP server token
+- `--token <value>`：设置 FRP 服务器令牌（必需）
+- `--config-url <url>`：从 URL 下载配置
+- `--config-file <path>`：使用本地配置文件
+- `--interactive`：进入交互式配置模式
+- `--frp-download-url <url>`：自定义 frpc 包的下载 URL
+- `--install-path <path>`：自定义安装路径
+- `--config-path <path>`：自定义配置文件路径
+- `--version <version>`：指定要安装的版本
 
-## Notes
-- For security, the script validates all inputs and configurations.
-- The script creates a systemd service for automatic startup and management.
-- Configuration files are backed up before any changes.
-- Logs are available in the system journal (`journalctl -u frpc`).
+## 环境变量
+
+- `FRPC_INSTALL_PATH`：自定义安装路径（默认：/opt/frpc）
+- `FRPC_CONFIG_PATH`：自定义配置路径（默认：/etc/frp/frpc.toml）
+- `FRPC_DOWNLOAD_URL`：自定义 frpc 包的下载 URL
+- `FRPC_VERSION`：指定安装的版本（默认：0.61.2）
+- `FRPC_TOKEN`：FRP 服务器令牌
+
+## 配置示例
+
+基础配置示例（`configs/frpc_basic.toml`）：
+
+```toml
+serverAddr = "frps.example.com"
+serverPort = 7000
+auth.token = "your_token_here"
+
+# SSH 穿透配置
+[[proxies]]
+name = "ssh"
+type = "tcp"
+localIP = "127.0.0.1"
+localPort = 22
+remotePort = 6000
+```
+
+查看 `configs` 目录获取更多配置示例。
+
+## 日志和故障排除
+
+- 服务日志可通过 `journalctl -u frpc` 查看
+- 脚本在执行过程中会对所有输入和配置进行验证
+
+## 注意事项
+
+- 为安全起见，脚本会验证所有输入和配置
+- 脚本会创建 systemd 服务，用于自动启动和管理
+- 配置文件在更改前会被备份
+- 日志可在系统日志中查看（`journalctl -u frpc`）

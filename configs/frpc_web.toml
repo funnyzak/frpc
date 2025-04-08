@@ -1,0 +1,32 @@
+# FRP 客户端 Web 服务配置示例
+# 此配置专注于 Web 服务穿透，支持 HTTP/HTTPS 协议
+
+# FRP 服务器连接配置
+serverAddr = "frps.example.com"  # FRP 服务器地址
+serverPort = 7000                # FRP 服务器端口
+auth.token = "your_token_here"   # 认证令牌
+
+# 日志配置
+log.level = "info"               # 日志级别
+log.maxDays = 3                  # 日志最大保留天数
+
+# HTTP 服务穿透配置
+[[proxies]]
+name = "web"                     # 服务名称
+type = "http"                    # 服务类型
+localIP = "127.0.0.1"            # 本地 Web 服务 IP
+localPort = 80                   # 本地 Web 服务端口
+customDomains = ["example.com"]  # 自定义域名
+
+# 路由规则（可选）
+locations = ["/", "/pic"]        # 路由规则
+hostHeaderRewrite = "example.com" # 主机头重写
+requestHeaders.set.x-from-where = "frp" # 设置请求头
+
+# HTTP 基本认证（可选，增加访问安全性）
+# httpUser = "admin"             # HTTP 认证用户名
+# httpPwd = "admin"              # HTTP 认证密码
+
+# HTTPS 设置（可选）
+# useEncryption = true           # 使用加密
+# useCompression = true          # 使用压缩

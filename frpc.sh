@@ -121,7 +121,7 @@ DEFAULT_FRPC_CONFIG=$(cat <<EOF
 
 serverAddr = "your_frps_ip_or_domain"  # Replace with your FRP server IP or domain
 serverPort = 7000                      # Replace with your FRP server port (usually 7000)
-auth.token = "SERVER_TOKEN"            # This will be replaced with your token
+auth.token = "your_token_here"            # This will be replaced with your token
 
 # Log configuration (optional)
 log.level = "info"                     # Log level: trace, debug, info, warn, error
@@ -646,7 +646,7 @@ apply_frpc_config() {
     cp -f "${frpc_conf_tmp_path}" "${FRPC_CONF_PATH}"
 
     # Replace token placeholder
-    if ! sed -i "s/SERVER_TOKEN/${FRPC_TOKEN}/g" "${FRPC_CONF_PATH}"; then
+    if ! sed -i "s/your_token_here/${FRPC_TOKEN}/g" "${FRPC_CONF_PATH}"; then
         log_message "error" "Failed to set token in configuration file."
         return 1
     fi
