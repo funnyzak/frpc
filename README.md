@@ -18,7 +18,6 @@
 
 ## 如何使用
 
-### 远程使用
 
 ```bash
 # 基本远程安装示例（使用令牌）
@@ -51,6 +50,7 @@ curl -sSL https://raw.githubusercontent.com/funnyzak/frpc/refs/heads/main/frpc.s
 > 如果你在中国大陆地区，无法访问 Github, 请使用 `Gitee` 镜像地址：
 > `https://gitee.com/funnyzak/frpc/raw/main/frpc.sh`，或者使用 `ghfast` 代理地址：`https://ghfast.top/https://raw.githubusercontent.com/funnyzak/frpc/refs/heads/main/frpc.sh`。
 
+> 如果使用模板配置文件，则配置文件中的 `token` 值，使用占位符号 `your_token_here`，在安装时会自动替换为传入的 `--token` 值。
 
 ### 基本安装
 
