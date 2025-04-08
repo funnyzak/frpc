@@ -1,7 +1,7 @@
 #!/bin/bash
 #########################################################################
 # FRP Client (frpc) Installation Script
-# Version: v1.2.0
+# Github: https://github.com/funnyzak/frpc
 #
 # Description:
 #   This script installs, configures, and manages FRP Client (frpc) on Linux systems.
@@ -66,7 +66,7 @@
 set -euo pipefail
 
 # Script version
-SCRIPT_VERSION="v0.0.10"
+SCRIPT_VERSION="v1.0.0"
 
 # Color definitions
 RED="\033[0;31m"

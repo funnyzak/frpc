@@ -16,40 +16,64 @@
 
 ## Usage
 
+### Remote Execution
+```bash
+# Basic remote installation with token
+curl -sSL https://gitee.com/funnyzak/frpc/raw/main/frpc.sh | bash -s install --token your_token
+
+# Remote installation with URL configuration
+curl -sSL https://gitee.com/funnyzak/frpc/raw/main/frpc.sh | bash -s install --token your_token --config-url http://example.com/frpc.toml
+
+# Remote installation of specific version
+curl -sSL https://gitee.com/funnyzak/frpc/raw/main/frpc.sh | bash -s install --token your_token --version 0.60.0
+
+# Remote interactive installation
+curl -sSL https://gitee.com/funnyzak/frpc/raw/main/frpc.sh | bash -s install --token your_token --interactive
+
+# Remote installation with custom paths
+curl -sSL https://gitee.com/funnyzak/frpc/raw/main/frpc.sh | bash -s install --token your_token --install-path /usr/local/frpc --config-path /etc/frpc/frpc.toml
+
+# Custom installation package download URL
+curl -sSL https://gitee.com/funnyzak/frpc/raw/main/frpc.sh | bash -s install --token your_token --frp-download-url http://example.com/frp.tar.gz
+
+# Remote view of current configuration
+curl -sSL https://gitee.com/funnyzak/frpc/raw/main/frpc.sh | bash -s config
+
+# Remote view of usage tips
+curl -sSL https://gitee.com/funnyzak/frpc/raw/main/frpc.sh | bash -s tips
+
+# Remote uninstallation
+curl -sSL https://gitee.com/funnyzak/frpc/raw/main/frpc.sh | bash -s uninstall
+```
+
 ### Installation
 ```bash
 # Basic installation with token
-./install_frpc.sh install --token my-token-value
+./frpc.sh install --token my-token-value
 
 # Installation with URL configuration
-./install_frpc.sh install --token my-token-value --config-url http://example.com/frpc.toml
+./frpc.sh install --token my-token-value --config-url http://example.com/frpc.toml
 
 # Installation with local configuration file
-./install_frpc.sh install --token my-token-value --config-file ./my-frpc.toml
+./frpc.sh install --token my-token-value --config-file ./configs/frpc_basic.toml
 
 # Interactive configuration
-./install_frpc.sh install --token my-token-value --interactive
+./frpc.sh install --token my-token-value --interactive
 
 # Installation with custom paths
-./install_frpc.sh install --token my-token-value --install-path /usr/local/frpc --config-path /etc/frpc.toml
+./frpc.sh install --token my-token-value --install-path /usr/local/frpc --config-path /etc/frpc/frpc.toml
 ```
 
 ### Management
 ```bash
 # Show current configuration
-./install_frpc.sh config
+./frpc.sh config
 
 # Show usage tips
-./install_frpc.sh tips
+./frpc.sh tips
 
 # Uninstall frpc
-./install_frpc.sh uninstall
-```
-
-### Remote Execution
-```bash
-# Remote installation example
-curl -sSL https://gitee.com/funnyzak/frpc/raw/main/frpc.sh | bash -s install --token your_token --config-url http://example.com/frpc.toml
+./frpc.sh uninstall
 ```
 
 ## Options for Install Command
@@ -68,9 +92,36 @@ curl -sSL https://gitee.com/funnyzak/frpc/raw/main/frpc.sh | bash -s install --t
 - `FRPC_DOWNLOAD_URL`: Custom download URL for frpc package
 - `FRPC_VERSION`: Specific version to install (default: 0.61.2)
 - `FRPC_TOKEN`: FRP server token
+- `PROXY_URL`: Github download proxy, default uses `https://ghfast.top/`, mainly for downloads in China.
+- `TMP_PATH`: Temporary file storage path, default is inside `/tmp`.
+- `SERVER_INSTALL_NAME`: Service name, default is `frpc.service`, can be customized.
+
+## Configuration Example
+
+Basic configuration example (`configs/frpc_basic.toml`):
+
+```toml
+serverAddr = "frps.example.com"
+serverPort = 7000
+auth.token = "your_token_here"
+
+# SSH tunnel configuration
+[[proxies]]
+name = "ssh"
+type = "tcp"
+localIP = "127.0.0.1"
+localPort = 22
+remotePort = 6000
+```
+
+Check the `configs` directory for more configuration examples.
+
+## Troubleshooting
+
+- Service logs can be viewed with `journalctl -u frpc`
+- The script validates all inputs and configurations during execution
 
 ## Notes
 - For security, the script validates all inputs and configurations.
 - The script creates a systemd service for automatic startup and management.
-- Configuration files are backed up before any changes.
 - Logs are available in the system journal (`journalctl -u frpc`).

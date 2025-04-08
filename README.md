@@ -49,6 +49,39 @@ curl -sSL https://gitee.com/funnyzak/frpc/raw/main/frpc.sh | bash -s tips
 curl -sSL https://gitee.com/funnyzak/frpc/raw/main/frpc.sh | bash -s uninstall
 ```
 
+安装时的输出示例如下：
+
+```plain
+-> # curl -sSL https://gitee.com/funnyzak/frpc/raw/main/frpc.sh | bash -s install --token your_token
+[INFO] Configuration method: Default template
+
+===== Installing FRPC =====
+
+===== Pre-installation Checks =====
+[INFO] Checking required dependencies...
+[SUCCESS] All dependencies are installed.
+[SUCCESS] systemd is available.
+[INFO] Created temporary directory: /tmp/frpc_install_1744074750
+[SUCCESS] Default configuration created.
+[SUCCESS] FRPC configuration applied successfully to /etc/frp/frpc.toml
+[INFO] Downloading FRPC package to /tmp/frpc_install_1744074750/frp.tar.gz
+[INFO] Source: https://ghfast.top/https://github.com/fatedier/frp/releases/download/v0.61.2/frp_0.61.2_linux_amd64.tar.gz
+######################################################################## 100.0%
+[SUCCESS] FRPC package downloaded successfully.
+[INFO] Extracting FRPC package...
+[SUCCESS] FRPC binary installed to /opt/frpc/frpc
+[INFO] Configuring systemd service...
+Created symlink /etc/systemd/system/multi-user.target.wants/frpc.service → /etc/systemd/system/frpc.service.
+[INFO] Checking FRPC service status...
+● frpc.service - FRP Client Service
+     Loaded: loaded (/etc/systemd/system/frpc.service; enabled; vendor preset: enabled)
+     Active: active (running) since Mon 2025-04-07 20:47:55 CST; 12h ago
+    Process: 16991 ExecStart=/opt/frpc/frpc -c /etc/frp/frpc.toml
+   Main PID: 16991
+        CPU: 9ms
+[INFO] Cleaned up temporary files.
+```
+
 ### 基本安装
 
 ```bash
@@ -81,7 +114,7 @@ curl -sSL https://gitee.com/funnyzak/frpc/raw/main/frpc.sh | bash -s uninstall
 ./frpc.sh uninstall
 ```
 
-## 安装命令选项
+## 命令选项
 
 - `--token <value>`：设置 FRP 服务器令牌（必需）
 - `--config-url <url>`：从 URL 下载客户端配置文件
@@ -99,6 +132,9 @@ curl -sSL https://gitee.com/funnyzak/frpc/raw/main/frpc.sh | bash -s uninstall
 - `FRPC_DOWNLOAD_URL`：自定义 frpc 包的下载 URL
 - `FRPC_VERSION`：指定安装的版本（默认：0.61.2）
 - `FRPC_TOKEN`：FRP 服务器令牌
+- `PROXY_URL`：Github 下载代理，默认使用 `https://ghfast.top/`，主要用于国内下载。
+- `TMP_PATH`：临时文件存放路径，默认 `/tmp` 内。
+- `SERVER_INSTALL_NAME`：服务名称，默认 `frpc.service`，可自定义。
 
 ## 配置示例
 
@@ -120,7 +156,7 @@ remotePort = 6000
 
 查看 `configs` 目录获取更多配置示例。
 
-## 日志和故障排除
+## 故障排除
 
 - 服务日志可通过 `journalctl -u frpc` 查看
 - 脚本在执行过程中会对所有输入和配置进行验证
