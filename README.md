@@ -18,69 +18,39 @@
 
 ## 如何使用
 
-### 远程使用
 
 ```bash
 # 基本远程安装示例（使用令牌）
-curl -sSL https://gitee.com/funnyzak/frpc/raw/main/frpc.sh | bash -s install --token your_token
+curl -sSL https://raw.githubusercontent.com/funnyzak/frpc/refs/heads/main/frpc.sh | bash -s install --token your_token
 
 # 使用远程配置文件URL安装
-curl -sSL https://gitee.com/funnyzak/frpc/raw/main/frpc.sh | bash -s install --token your_token --config-url http://example.com/frpc.toml
+curl -sSL https://raw.githubusercontent.com/funnyzak/frpc/refs/heads/main/frpc.sh | bash -s install --token your_token --config-url http://example.com/frpc.toml
 
 # 远程安装特定版本
-curl -sSL https://gitee.com/funnyzak/frpc/raw/main/frpc.sh | bash -s install --token your_token --version 0.60.0
+curl -sSL https://raw.githubusercontent.com/funnyzak/frpc/refs/heads/main/frpc.sh | bash -s install --token your_token --version 0.60.0
 
 # 远程交互式安装
-curl -sSL https://gitee.com/funnyzak/frpc/raw/main/frpc.sh | bash -s install --token your_token --interactive
+curl -sSL https://raw.githubusercontent.com/funnyzak/frpc/refs/heads/main/frpc.sh | bash -s install --token your_token --interactive
 
 # 远程安装到自定义路径
-curl -sSL https://gitee.com/funnyzak/frpc/raw/main/frpc.sh | bash -s install --token your_token --install-path /usr/local/frpc --config-path /etc/frpc/frpc.toml
+curl -sSL https://raw.githubusercontent.com/funnyzak/frpc/refs/heads/main/frpc.sh | bash -s install --token your_token --install-path /usr/local/frpc --config-path /etc/frpc/frpc.toml
 
 # 自定义安装包下载地址
-curl -sSL https://gitee.com/funnyzak/frpc/raw/main/frpc.sh | bash -s install --token your_token --frp-download-url http://example.com/frp.tar.gz
+curl -sSL https://raw.githubusercontent.com/funnyzak/frpc/refs/heads/main/frpc.sh | bash -s install --token your_token --frp-download-url http://example.com/frp.tar.gz
 
 # 远程查看当前配置
-curl -sSL https://gitee.com/funnyzak/frpc/raw/main/frpc.sh | bash -s config
+curl -sSL https://raw.githubusercontent.com/funnyzak/frpc/refs/heads/main/frpc.sh | bash -s config
 
 # 远程查看使用提示
-curl -sSL https://gitee.com/funnyzak/frpc/raw/main/frpc.sh | bash -s tips
+curl -sSL https://raw.githubusercontent.com/funnyzak/frpc/refs/heads/main/frpc.sh | bash -s tips
 
 # 远程卸载
-curl -sSL https://gitee.com/funnyzak/frpc/raw/main/frpc.sh | bash -s uninstall
+curl -sSL https://raw.githubusercontent.com/funnyzak/frpc/refs/heads/main/frpc.sh | bash -s uninstall
 ```
+> 如果你在中国大陆地区，无法访问 Github, 请使用 `Gitee` 镜像地址：
+> `https://gitee.com/funnyzak/frpc/raw/main/frpc.sh`，或者使用 `ghfast` 代理地址：`https://ghfast.top/https://raw.githubusercontent.com/funnyzak/frpc/refs/heads/main/frpc.sh`。
 
-安装时的输出示例如下：
-
-```plain
--> # curl -sSL https://gitee.com/funnyzak/frpc/raw/main/frpc.sh | bash -s install --token your_token
-[INFO] Configuration method: Default template
-
-===== Installing FRPC =====
-
-===== Pre-installation Checks =====
-[INFO] Checking required dependencies...
-[SUCCESS] All dependencies are installed.
-[SUCCESS] systemd is available.
-[INFO] Created temporary directory: /tmp/frpc_install_1744074750
-[SUCCESS] Default configuration created.
-[SUCCESS] FRPC configuration applied successfully to /etc/frp/frpc.toml
-[INFO] Downloading FRPC package to /tmp/frpc_install_1744074750/frp.tar.gz
-[INFO] Source: https://ghfast.top/https://github.com/fatedier/frp/releases/download/v0.61.2/frp_0.61.2_linux_amd64.tar.gz
-######################################################################## 100.0%
-[SUCCESS] FRPC package downloaded successfully.
-[INFO] Extracting FRPC package...
-[SUCCESS] FRPC binary installed to /opt/frpc/frpc
-[INFO] Configuring systemd service...
-Created symlink /etc/systemd/system/multi-user.target.wants/frpc.service → /etc/systemd/system/frpc.service.
-[INFO] Checking FRPC service status...
-● frpc.service - FRP Client Service
-     Loaded: loaded (/etc/systemd/system/frpc.service; enabled; vendor preset: enabled)
-     Active: active (running) since Mon 2025-04-07 20:47:55 CST; 12h ago
-    Process: 16991 ExecStart=/opt/frpc/frpc -c /etc/frp/frpc.toml
-   Main PID: 16991
-        CPU: 9ms
-[INFO] Cleaned up temporary files.
-```
+> 如果使用模板配置文件，则配置文件中的 `token` 值，使用占位符号 `your_token_here`，在安装时会自动替换为传入的 `--token` 值。
 
 ### 基本安装
 
@@ -132,7 +102,7 @@ Created symlink /etc/systemd/system/multi-user.target.wants/frpc.service → /et
 - `FRPC_DOWNLOAD_URL`：自定义 frpc 包的下载 URL
 - `FRPC_VERSION`：指定安装的版本（默认：0.61.2）
 - `FRPC_TOKEN`：FRP 服务器令牌
-- `PROXY_URL`：Github 下载代理，默认使用 `https://ghfast.top/`，主要用于国内下载。
+- `PROXY_URL`： 如果在中国大陆地区，则使用 Github 下载代理，默认使用 `https://ghfast.top/` 以提高下载速度。可以通过设置环境变量 `PROXY_URL` 来修改代理地址。
 - `TMP_PATH`：临时文件存放路径，默认 `/tmp` 内。
 - `SERVER_INSTALL_NAME`：服务名称，默认 `frpc.service`，可自定义。
 
@@ -155,6 +125,57 @@ remotePort = 6000
 ```
 
 查看 `configs` 目录获取更多配置示例。
+
+## 安装示例
+
+如下为一个通过远程配置文件安装的示例：
+
+```plain
+> # curl -sSL https://gitee.com/funnyzak/frpc/raw/main/frpc.sh | bash -s install --token myfrpstoken --config-url https://myfrpcstore.yycc.dev/示例配置.toml
+[INFO] Configuration method: URL (https://myfrpcstore.yycc.dev/示例配置.toml)
+
+===== Installing FRPC =====
+
+===== Pre-installation Checks =====
+[INFO] Checking required dependencies...
+[SUCCESS] All dependencies are installed.
+[SUCCESS] systemd is available.
+[INFO] Created temporary directory: /tmp/frpc_install_1744079006
+[INFO] Downloading FRPC configuration to /tmp/frpc_install_1744079006/frpc_conf_1744079006.toml
+[INFO] Source: https://myfrpcstore.yycc.dev/示例配置.toml
+######################################################################## 100.0%
+[SUCCESS] FRPC configuration downloaded successfully.
+[SUCCESS] Configuration successfully downloaded from URL.
+[SUCCESS] FRPC configuration applied successfully to /etc/frp/frpc.toml
+[INFO] Downloading FRPC package to /tmp/frpc_install_1744079006/frp.tar.gz
+[INFO] Source: https://ghfast.top/https://github.com/fatedier/frp/releases/download/v0.61.2/frp_0.61.2_linux_amd64.tar.gz
+######################################################################## 100.0%
+[SUCCESS] FRPC package downloaded successfully.
+[INFO] Extracting FRPC package...
+[SUCCESS] FRPC binary installed to /opt/frpc/frpc
+[INFO] Configuring systemd service...
+Created symlink /etc/systemd/system/multi-user.target.wants/frpc.service → /etc/systemd/system/frpc.service.
+[INFO] Checking FRPC service status...
+● frpc.service - FRP Client Service
+     Loaded: loaded (/etc/systemd/system/frpc.service; enabled; vendor preset: enabled)
+     Active: active (running) since Tue 2025-04-08 10:23:35 CST; 2s ago
+   Main PID: 23709 (frpc)
+      Tasks: 6 (limit: 48097)
+     Memory: 4.9M
+        CPU: 11ms
+     CGroup: /system.slice/frpc.service
+             └─23709 /opt/frpc/frpc -c /etc/frp/frpc.toml
+
+4月 08 10:23:35 PVE systemd[1]: Started FRP Client Service.
+4月 08 10:23:35 PVE frpc[23709]: 2025-04-08 10:23:35.561 [I] [sub/root.go:142] start frpc service for config file [/etc/frp/frpc.toml]
+4月 08 10:23:35 PVE frpc[23709]: 2025-04-08 10:23:35.562 [I] [client/service.go:295] try to connect to server...
+4月 08 10:23:35 PVE frpc[23709]: 2025-04-08 10:23:35.603 [I] [client/service.go:287] [b150d9480cc74323] login to server success, get run id [b150d9480cc74323]
+4月 08 10:23:35 PVE frpc[23709]: 2025-04-08 10:23:35.603 [I] [proxy/proxy_manager.go:173] [b150d9480cc74323] proxy added: [示例配置.RPC 示例配置.HTTP]
+4月 08 10:23:35 PVE frpc[23709]: 2025-04-08 10:23:35.615 [I] [client/control.go:168] [b150d9480cc74323] [示例配置.RPC] start proxy success
+4月 08 10:23:35 PVE frpc[23709]: 2025-04-08 10:23:35.615 [I] [client/control.go:168] [b150d9480cc74323] [示例配置.HTTP] start proxy success
+Hint: Some lines were ellipsized, use -l to show in full.
+[SUCCESS] FRPC service is running.
+```
 
 ## 故障排除
 
