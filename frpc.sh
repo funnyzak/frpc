@@ -130,6 +130,9 @@ auth.token = "your_token_here"            # This will be replaced with your toke
 log.level = "info"                     # Log level: trace, debug, info, warn, error
 log.maxDays = 3                        # Maximum number of days to keep log files
 
+[transport]
+heartbeatInterval = 10
+
 # TCP proxy example for SSH
 [[proxies]]
 name = "ssh"                           # Unique name for this proxy
