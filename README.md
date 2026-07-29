@@ -106,7 +106,7 @@ curl -sSL https://raw.githubusercontent.com/funnyzak/frpc/refs/heads/main/frpc.s
 - `FRPC_INSTALL_PATH`：自定义安装路径（默认：/opt/frpc）
 - `FRPC_CONFIG_PATH`：自定义配置路径（默认：/etc/frp/frpc.toml）
 - `FRPC_DOWNLOAD_URL`：自定义 frpc 包的下载 URL
-- `FRPC_VERSION`：指定安装的版本（默认：0.61.2）
+- `FRPC_VERSION`：指定安装的版本（默认：0.70.1）
 - `FRPC_TOKEN`：FRP 服务器令牌
 - `PROXY_URL`： 如果在中国大陆地区，则使用 Github 下载代理，默认使用 `https://ghfast.top/` 以提高下载速度。可以通过设置环境变量 `PROXY_URL` 来修改代理地址。
 - `TMP_PATH`：临时文件存放路径，默认 `/tmp` 内。
@@ -154,7 +154,7 @@ remotePort = 6000
 [SUCCESS] Configuration successfully downloaded from URL.
 [SUCCESS] FRPC configuration applied successfully to /etc/frp/frpc.toml
 [INFO] Downloading FRPC package to /tmp/frpc_install_1744079006/frp.tar.gz
-[INFO] Source: https://ghfast.top/https://github.com/fatedier/frp/releases/download/v0.61.2/frp_0.61.2_linux_amd64.tar.gz
+[INFO] Source: https://ghfast.top/https://github.com/fatedier/frp/releases/download/v0.70.1/frp_0.70.1_linux_amd64.tar.gz
 ######################################################################## 100.0%
 [SUCCESS] FRPC package downloaded successfully.
 [INFO] Extracting FRPC package...
