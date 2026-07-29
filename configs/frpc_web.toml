@@ -16,7 +16,9 @@ name = "web"                     # 服务名称
 type = "http"                    # 服务类型
 localIP = "127.0.0.1"            # 本地 Web 服务 IP
 localPort = 80                   # 本地 Web 服务端口
+subdomain = "web"  # 子域名
 customDomains = ["example.com"]  # 自定义域名
+
 
 # 路由规则（可选）
 locations = ["/", "/pic"]        # 路由规则
